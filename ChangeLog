@@ -1,0 +1,8 @@
+v0.02 [September 10, 2004]
+
+- print summary
++ add filed: source, update_time, summary.
+
+v0.01 [September 10, 2004]
+
++ Based on WWW::Google::News 0.07 by Bowen Dwelle <bowen@dwelle.org>.

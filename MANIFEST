@@ -1,4 +1,5 @@
 MANIFEST			This list of files
+ChangeLog
 README
 Makefile.PL
 lib/WWW/Google/News/TW.pm
