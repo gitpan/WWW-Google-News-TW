@@ -1,3 +1,8 @@
+v0.06 [September 12, 2004]
+
+! use inc::Module::Install instead of ExtUtils::MakeMaker.
+! rename ChangeLog to Changes.
+
 v0.05 [September 12, 2004]
 
 * fix bug about summary (get_news).
