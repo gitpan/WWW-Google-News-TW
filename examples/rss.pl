@@ -9,7 +9,7 @@
 use warnings;
 use strict;
 
-use lib '/home/clsung/CPAN/WWW-Google-News-TW-0.05/blib/lib';
+use lib '../blib/lib';
 use WWW::Google::News::TW qw( get_news );
 use CGI qw(:standard);
 use Encode qw (from_to);

@@ -8,7 +8,7 @@ use WWW::Google::News::TW qw( get_news_for_topic );
 
 my $results;
 
-$results = get_news_for_topic( '金牌' );
+$results = get_news_for_topic( '國際' );
 
 #use Data::Dumper::Simple;
 #print STDERR "\n",Dumper($results);

@@ -1,3 +1,13 @@
+v0.09 [March 1, 2005]
+
+! the same issue in 0.08 also appear in get_news_for_topic, fixed.
+! fixed t/*
+
+v0.08 [March 1, 2005]
+
+! change $re1 in lib/WWW/Google/News/TW.pm, with respect to Google's
+  format change.
+
 v0.07 [November 19, 2004]
 
 ! fix lib/WWW/Google/News/TW.pm, typo

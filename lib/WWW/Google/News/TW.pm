@@ -7,7 +7,7 @@ require Exporter;
 
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(get_news get_news_for_topic);
-our $VERSION   = '0.07';
+our $VERSION   = '0.09';
 
 use Carp;
 use LWP;
@@ -26,7 +26,7 @@ sub get_news {
 #  "&raquo;" >>
 #  my $re1 =  '<a name=(.*?)(?:<a name=|<br clear=all)';
 #  my $re2 =  '<a href="([^"]*)" id=r-\d-\d target=_blank><b>([^<]*)</b></a><br>';
-  my $re1 =  '<td bgcolor=#efefef class=ks width=1% nowrap>(.*?)</td>';
+  my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)</td>';
   my $re2 =  '<a href="([^"]*)" id=r-\d-\d target=_blank><b>([^<]*)</b></a><br>'.
 	    '<font size=-1><font color=#6f6f6f><b>([^<]*)</font>'.
 	    '\s?<nobr>([^<]*)</nobr></b></font><br>'.
@@ -78,7 +78,7 @@ sub get_news_for_topic {
     return unless $response->is_success;
 
 #    print STDERR $url."\n";
-    my $re1 =  '<td bgcolor=#efefef class=ks width=1% nowrap>(.*?)&copy;2004 Google</font></center></body></html>';
+    my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)&copy;\d{4} Google</font></center></body></html>';
     my $re2 =  '<a href="([^"]*)" id=r-\d target=_blank>(.*?)</a><br>'.
 	'<font size=-1><font color=#6f6f6f>([^<]*)</font>'.
 	'\s?<nobr>([^<]*)</nobr></font><br>'.

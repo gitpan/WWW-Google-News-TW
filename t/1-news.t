@@ -13,6 +13,6 @@ $results = get_news();
 
 ok(defined($results),'GNTW: At least we got something');
 
-ok(exists($results->{'焦點'}),'GN-TW: Top Stories Exists');
+ok(exists($results->{'國際'}),'GN-TW: Top National Stories Exists');
 #ok(keys(%{$results->{'焦點'}}),'GN-TW: Top Stories Is Not Empty');
-ok(exists(${$results->{'焦點'}}[0]),'GN-TW: Top Stories Story 1 Exists');
+ok(exists(${$results->{'社會'}}[0]),'GN-TW: Top Social Stories Story 1 Exists');
