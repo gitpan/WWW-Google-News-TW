@@ -1,3 +1,7 @@
+v0.07 [November 19, 2004]
+
+! fix lib/WWW/Google/News/TW.pm, typo
+
 v0.06 [September 12, 2004]
 
 ! use inc::Module::Install instead of ExtUtils::MakeMaker.

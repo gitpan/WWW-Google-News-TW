@@ -7,7 +7,7 @@ require Exporter;
 
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(get_news get_news_for_topic);
-our $VERSION   = '0.06';
+our $VERSION   = '0.07';
 
 use Carp;
 use LWP;
@@ -130,7 +130,7 @@ WWW::Google::News::TW - Access to Google's Taiwan News Service (Not Usenet)
 
 =head1 SYNOPSIS
 
-  use WWW:Google::News::TW qw(get_news);
+  use WWW::Google::News::TW qw(get_news);
   my $results = get_news();
   
   my $results = get_news_for_topic('金牌');
