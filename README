@@ -1,0 +1,31 @@
+This is the README file for WWW::Google::News::TW, a simple screen 
+scraper for Google's Taiwan News service. 
+
+* Installation
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+* Todo
+
+- search
+- print summary
+
+* History
+
+v0.01 
+
++ Based on WWW::Google::News 0.07 by Bowen Dwelle <bowen@dwelle.org>.
+
+* Copyright
+
+Copyright 2004 by Cheng-Lung Sung <clsung@dragon2.net>
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+See <http://www.perl.com/perl/misc/Artistic.html>.

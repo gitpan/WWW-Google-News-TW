@@ -1,0 +1,7 @@
+MANIFEST			This list of files
+README
+Makefile.PL
+lib/WWW/Google/News/TW.pm
+t/0-basic.t
+t/1-news.t
+META.yml                                 Module meta-data (added by MakeMaker)
