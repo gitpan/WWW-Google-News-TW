@@ -1,3 +1,10 @@
+v0.05 [September 12, 2004]
+
+* fix bug about summary (get_news).
++ add get_news_for_topic(), a search function.
++ add t/2-news_topic.t
++ add examples/rss.pl for generating Google Headline
+
 v0.02 [September 10, 2004]
 
 - print summary
