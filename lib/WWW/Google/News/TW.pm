@@ -6,8 +6,8 @@ use warnings;
 require Exporter;
 
 our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(get_news get_news_for_topic);
-our $VERSION   = '0.09';
+our @EXPORT_OK = qw(get_news get_news_for_topic get_news_for_category);
+our $VERSION   = '0.10';
 
 use Carp;
 use LWP;
@@ -120,6 +120,58 @@ sub get_news_for_topic {
 
 }
 
+sub get_news_for_category {
+    # Web version: http://news.google.com.tw/news?ned=tw
+    # plain text version : http://news.google.com.tw/news?ned=ttw
+  my $topic = $_[0];
+  my $url = 'http://news.google.com.tw/news?ned=ttw&topic='.$topic;
+  my $ua = LWP::UserAgent->new;
+     $ua->agent('Mozilla/5.0');
+  my $response = $ua->get($url);
+  my $results = [];
+  return unless $response->is_success;
+
+  my $re1 = '<table border=0 width=75% valign=top cellpadding=2 cellspacing=7><tr><td valign=top>(.*?)</table>';
+  my $re2 =  '<a href="([^"]*)" id=r-\d+ target=_blank><b>([^<]*)</b></a><br>'.
+	    '<font size=-1><font color=#6f6f6f><b>([^<]*)</font>'.
+	    '\s?<nobr>([^<]*)</nobr></b></font><br>'.
+	    '<font size=-1>([^<]*)<b>...</b>.*?'.
+	    '<a class=p href=([^>]*)><nobr><b>([^<]*)</b></nobr></a>';
+  my @sections = split /($re1)/s,$response->content;
+  my $current_section = '';
+#  print STDERR $response->content;
+#  print STDERR "total num is ".$#sections."\n";
+  foreach my $section (@sections) {
+    if ($section =~ m/$re1/s) {
+      $current_section = $1;
+      #$current_section =~ s/&nbsp;//g; # or put this &nbsp;(.*?)(?:&nbsp;)? in re1
+      my @stories = split /($re2)/si,$current_section;
+#  print STDERR "total num is ".$#stories."\n";
+      foreach my $story (@stories) {
+        if ($story =~ m/$re2/si) {
+#          if (!(exists($results->{$current_section}))) {
+#            $results->{$current_section} = [];
+#          }
+          my $story_h = {};
+	  my( $url, $headline, $source, $update_time, $summary, $related_url, $related_news) = 
+	    ( $1, $2, $3, $4, $5, $6, $7 );
+          $story_h->{url} = $url;
+          $story_h->{headline} = $headline;
+	  $story_h->{source} = $source;
+	  $story_h->{source} =~ s/&nbsp;-//g;
+	  $story_h->{update_time} = $update_time;
+	  $story_h->{summary} = $summary;
+	  $story_h->{related_url} = $related_url;
+	  $story_h->{related_news} = $related_news;
+#          push(@{$results->{$current_section}},$story_h);
+          push(@{$results},$story_h);
+        }
+      }
+    }
+  }
+  # print STDERR Dumper($results);
+  return $results;
+}
 1;
 
 __END__

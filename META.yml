@@ -1,5 +1,5 @@
 name: WWW-Google-News-TW
-version: 0.09
+version: 0.10
 abstract: Access to Google's Taiwan News Service
 author: Cheng-Lung Sung <clsung@dragon2.net>
 license: perl

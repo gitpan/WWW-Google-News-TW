@@ -15,4 +15,5 @@ t/0-basic.t
 t/1-news.t
 t/2-news_topic.t
 examples/rss.pl
+examples/rss_category.pl
 META.yml                                 Module meta-data (added by MakeMaker)
