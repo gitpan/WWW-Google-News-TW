@@ -2,9 +2,9 @@
 # This is the program that can generate 
 # seperate Google Taiwan News RSS (2.0)
 # author: Cheng-Lung Sung
-# version: 0.89
+# version: 0.90
 # create date: Mar 23 2005
-# last update: Mar 23 2005
+# last update: Oct 28 2005
 # license: Artistic (Perl)
 
 use warnings;
@@ -32,7 +32,7 @@ $rss->channel(title => "Google $ecats{$categories{$category}} News");
 my $link = 'http://news.google.com.tw/?ned=tw&topic='.$category;
 $rss->channel(description => "[$categories{$category}] 新聞 ", link => $link);
 my $now = localtime;
-$rss->channel(generator => 'clsung@twfreebsd.org', pubDate => $now,
+$rss->channel(generator => 'clsung@tw.freebsd.org', pubDate => $now,
     language => 'utf-8', ttl => 30);
 
 my $news = get_news_for_category($category);

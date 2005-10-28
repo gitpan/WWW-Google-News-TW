@@ -1,7 +1,7 @@
 use inc::Module::Install;
 
 name('WWW-Google-News-TW');
-author('Cheng-Lung Sung <clsung@dragon2.net>');
+author('Cheng-Lung Sung <clsung@tw.freebsd.org>');
 abstract('Access to Google\'s Taiwan News Service');
 license('perl');
 version_from('lib/WWW/Google/News/TW.pm');

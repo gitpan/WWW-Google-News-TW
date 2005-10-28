@@ -1,3 +1,9 @@
+v0.11 [October 28, 2005]
+
+! fixed example/rss_category.pl
+! change email address
+! news.google.com.tw make minor changes, so do I :p
+
 v0.10 [March 23, 2005]
 
 + add get_news_for_category(), now support browse by category

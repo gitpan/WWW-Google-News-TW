@@ -1,5 +1,6 @@
 package WWW::Google::News::TW;
 
+use utf8;
 use strict;
 use warnings;
 
@@ -7,7 +8,7 @@ require Exporter;
 
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(get_news get_news_for_topic get_news_for_category);
-our $VERSION   = '0.10';
+our $VERSION   = '0.11';
 
 use Carp;
 use LWP;
@@ -27,7 +28,7 @@ sub get_news {
 #  my $re1 =  '<a name=(.*?)(?:<a name=|<br clear=all)';
 #  my $re2 =  '<a href="([^"]*)" id=r-\d-\d target=_blank><b>([^<]*)</b></a><br>';
   my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)</td>';
-  my $re2 =  '<a href="([^"]*)" id=r-\d-\d target=_blank><b>([^<]*)</b></a><br>'.
+  my $re2 =  '<a href="([^"]*)" id=r-\d-\d_\d+ target=_blank><b>([^<]*)</b></a><br>'.
 	    '<font size=-1><font color=#6f6f6f><b>([^<]*)</font>'.
 	    '\s?<nobr>([^<]*)</nobr></b></font><br>'.
 	    '<font size=-1>([^<]*)<b>...</b>';
@@ -79,7 +80,7 @@ sub get_news_for_topic {
 
 #    print STDERR $url."\n";
     my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)&copy;\d{4} Google</font></center></body></html>';
-    my $re2 =  '<a href="([^"]*)" id=r-\d target=_blank>(.*?)</a><br>'.
+    my $re2 =  '<a href="([^"]*)" id=r-\d_\d+ target=_blank>(.*?)</a><br>'.
 	'<font size=-1><font color=#6f6f6f>([^<]*)</font>'.
 	'\s?<nobr>([^<]*)</nobr></font><br>'.
 	'<font size=-1>(.*?)<b>...</b>';
@@ -236,7 +237,7 @@ L<WWW::Google::News>, L<http://news.google.com.tw/>
 
 =head1 AUTHORS
 
-Cheng-Lung Sung E<lt>clsung@dragon2.netE<gt>
+Cheng-Lung Sung E<lt>clsung@tw.freebsd.orgE<gt>
 
 =head1 KUDOS
 
@@ -245,7 +246,7 @@ for the basis of this module
 
 =head1 COPYRIGHT
 
-Copyright 2004 by Cheng-Lung Sung E<lt>clsung@dragon2.netE<gt>.
+Copyright 2004 by Cheng-Lung Sung E<lt>clsung@tw.freebsd.orgE<gt>.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

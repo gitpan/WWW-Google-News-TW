@@ -12,12 +12,9 @@ To install this module type the following:
 
 * Todo
 
-- category browse, now is done in 0.10.
-- search, now is done in 0.05.
-
 * Copyright
 
-Copyright 2004 by Cheng-Lung Sung <clsung@dragon2.net>
+Copyright 2004 by Cheng-Lung Sung <clsung@tw.freebsd.org>
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

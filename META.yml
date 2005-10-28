@@ -1,7 +1,7 @@
 name: WWW-Google-News-TW
-version: 0.10
+version: 0.11
 abstract: Access to Google's Taiwan News Service
-author: Cheng-Lung Sung <clsung@dragon2.net>
+author: Cheng-Lung Sung <clsung@tw.freebsd.org>
 license: perl
 distribution_type: module
 requires:
