@@ -8,11 +8,12 @@ require Exporter;
 
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(get_news get_news_for_topic get_news_for_category);
-our $VERSION   = '0.11';
+our $VERSION   = '0.12';
 
 use Carp;
 use LWP;
 use URI::Escape;
+use Encode;
 
 sub get_news {
     # Web version: http://news.google.com.tw/news?ned=tw
@@ -24,24 +25,20 @@ sub get_news {
   my $results = {};
   return unless $response->is_success;
 
-#  "&raquo;" >>
-#  my $re1 =  '<a name=(.*?)(?:<a name=|<br clear=all)';
-#  my $re2 =  '<a href="([^"]*)" id=r-\d-\d target=_blank><b>([^<]*)</b></a><br>';
-  my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)</td>';
-  my $re2 =  '<a href="([^"]*)" id=r-\d-\d_\d+ target=_blank><b>([^<]*)</b></a><br>'.
-	    '<font size=-1><font color=#6f6f6f><b>([^<]*)</font>'.
-	    '\s?<nobr>([^<]*)</nobr></b></font><br>'.
+  my $re1 =  '<td bgcolor=#efefef width=60% nowrap>&nbsp;<font class=ks>(.*?)</font>';
+  my $re2 =  '<a href="([^"]*)" id=r-\d-\d_\d+ target=_blank>([^<]*)</a><br>'.
+	    '<font size=-1><font color=#6f6f6f>([^<]*)</font>'.
+	    '\s?<nobr>([^<]*)</nobr></font><br>'.
 	    '<font size=-1>([^<]*)<b>...</b>';
-#  my $re3 =  '<font size=-1>([^<]*)<b>...</b>';
 
-  my @sections = split /($re1)/m,$response->content;
+  my $content = $response->decoded_content;
+  $content = $response->content if (not defined $content);  
+  my @sections = split /($re1)/m,$content;
   my $current_section = '';
-#  print STDERR "total num is ".$#sections."\n";
   foreach my $section (@sections) {
     if ($section =~ m/$re1/m) {
       $current_section = $1;
       $current_section =~ s/&nbsp;//g; # or put this &nbsp;(.*?)(?:&nbsp;)? in re1
-      #print STDERR $1,"\n";
     } else {
       my @stories = split /($re2)/mi,$section;
       foreach my $story (@stories) {
@@ -62,7 +59,6 @@ sub get_news {
       }
     }
   }
-  # print STDERR Dumper($results);
   return $results;
 }
 
@@ -78,16 +74,16 @@ sub get_news_for_topic {
     my $response = $ua->get($url);
     return unless $response->is_success;
 
-#    print STDERR $url."\n";
-    my $re1 =  '<td bgcolor=#efefef class=ks width=60% nowrap>(.*?)&copy;\d{4} Google</font></center></body></html>';
+    my $re1 =  '<td bgcolor=#efefef width=60% nowrap>&nbsp;(.*?)&copy;\d{4} Google';
     my $re2 =  '<a href="([^"]*)" id=r-\d_\d+ target=_blank>(.*?)</a><br>'.
 	'<font size=-1><font color=#6f6f6f>([^<]*)</font>'.
 	'\s?<nobr>([^<]*)</nobr></font><br>'.
 	'<font size=-1>(.*?)<b>...</b>';
 
-    my( $section ) = ( $response->content =~ m/$re1/s );
+    my $content = $response->decoded_content;
+    $content = $response->content if (not defined $content);  
+    my( $section ) = ( $content =~ m/$re1/s );
     $section =~ s/\n//g;
-#    print STDERR $section."\n";
     my @stories = split /($re2)/mi,$section;
 
     foreach my $story (@stories) {
@@ -101,15 +97,12 @@ sub get_news_for_topic {
 	    $update_time =~ s/\s+/ /g;
 	    $update_time =~ s/-//g;
 	    $headline =~ s#<.+?>##gi;
-	    #$summary = $hs->parse($summary); $hs->eof;
-	    #$summary =~ s#<br># #gi;
 	    $summary =~ s#<.+?>##gi;
 
 	    $story_h->{url} = $url;
 	    $story_h->{headline} = $headline;
 	    $story_h->{source} = $source;
 	    $story_h->{update_time} = $update_time;
-	    #$story_h->{description} = "$source: $summary";
 	    $story_h->{summary} = $summary;
 
 	    push(@results,$story_h);
@@ -140,19 +133,12 @@ sub get_news_for_category {
 	    '<a class=p href=([^>]*)><nobr><b>([^<]*)</b></nobr></a>';
   my @sections = split /($re1)/s,$response->content;
   my $current_section = '';
-#  print STDERR $response->content;
-#  print STDERR "total num is ".$#sections."\n";
   foreach my $section (@sections) {
     if ($section =~ m/$re1/s) {
       $current_section = $1;
-      #$current_section =~ s/&nbsp;//g; # or put this &nbsp;(.*?)(?:&nbsp;)? in re1
       my @stories = split /($re2)/si,$current_section;
-#  print STDERR "total num is ".$#stories."\n";
       foreach my $story (@stories) {
         if ($story =~ m/$re2/si) {
-#          if (!(exists($results->{$current_section}))) {
-#            $results->{$current_section} = [];
-#          }
           my $story_h = {};
 	  my( $url, $headline, $source, $update_time, $summary, $related_url, $related_news) = 
 	    ( $1, $2, $3, $4, $5, $6, $7 );
@@ -164,13 +150,11 @@ sub get_news_for_category {
 	  $story_h->{summary} = $summary;
 	  $story_h->{related_url} = $related_url;
 	  $story_h->{related_news} = $related_news;
-#          push(@{$results->{$current_section}},$story_h);
           push(@{$results},$story_h);
         }
       }
     }
   }
-  # print STDERR Dumper($results);
   return $results;
 }
 1;
@@ -246,7 +230,7 @@ for the basis of this module
 
 =head1 COPYRIGHT
 
-Copyright 2004 by Cheng-Lung Sung E<lt>clsung@tw.freebsd.orgE<gt>.
+Copyright 2004,2005,2006,2007 by Cheng-Lung Sung E<lt>clsung@tw.freebsd.orgE<gt>.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

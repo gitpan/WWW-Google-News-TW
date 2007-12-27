@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
+use utf8;
 use Test::More tests => 3;
 use CGI qw(:standard);
 
@@ -9,9 +10,6 @@ use WWW::Google::News::TW qw( get_news );
 my $results;
 
 $results = get_news();
-
-#use Data::Dumper;
-#print STDERR "\n",Dumper($results);
 
 ok(defined($results),'GNTW: At least we got something');
 
